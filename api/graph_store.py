@@ -15,7 +15,7 @@ class GraphStore:
         Add or update a triple in the graph.
         Creates nodes for subject and object if they don't exist.
         """
-        print(f"DEBUG: upsert_triple called with: {subject} --{relation}--> {object_val}")
+
         
         # Get or create node IDs
         subject_id = self._get_or_create_node_id(subject, "entity")
@@ -35,7 +35,7 @@ class GraphStore:
             # Keep the maximum confidence
             existing_confidence = self.graph.edges[subject_id, object_id, edge_id].get("confidence", 0.0)
             self.graph.edges[subject_id, object_id, edge_id]["confidence"] = max(existing_confidence, confidence)
-            print(f"DEBUG: Updated existing edge {edge_id}")
+
         else:
             # Create new edge
             edge_id = str(uuid.uuid4())
@@ -48,9 +48,9 @@ class GraphStore:
                 sources=[source_id],
                 confidence=confidence
             )
-            print(f"DEBUG: Created new edge {edge_id}")
+
         
-        print(f"DEBUG: Graph now has {len(self.graph.nodes())} nodes and {len(self.graph.edges())} edges")
+
     
     def _get_or_create_node_id(self, label: str, node_type: str) -> str:
         """Get existing node ID or create new node."""
@@ -70,7 +70,7 @@ class GraphStore:
         nodes = []
         edges = []
         
-        print(f"DEBUG: to_dto() - Graph has {len(self.graph.nodes())} nodes and {len(self.graph.edges())} edges")
+
         
         # Convert nodes
         for node_id, attrs in self.graph.nodes(data=True):
@@ -91,7 +91,7 @@ class GraphStore:
             })
         
         result = {"nodes": nodes, "edges": edges}
-        print(f"DEBUG: to_dto() - Returning {len(nodes)} nodes and {len(edges)} edges")
+
         return result
 
     def get_subgraph_by_keywords(self, keywords: List[str]) -> 'GraphStore':

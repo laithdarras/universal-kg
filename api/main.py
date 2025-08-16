@@ -139,7 +139,6 @@ async def ingest_urls(request: IngestRequest):
     
     # Return the current graph
     result = graph_store.to_dto()
-    logger.info(f"DEBUG: Backend returning {len(result.get('nodes', []))} nodes and {len(result.get('edges', []))} edges")
     return result
 
 @app.post("/api/ingest-file", response_model=IngestResponse)
@@ -193,7 +192,6 @@ async def ingest_file(file: UploadFile = File(...)):
         
         # Return the current graph
         result = graph_store.to_dto()
-        logger.info(f"DEBUG: Backend returning {len(result.get('nodes', []))} nodes and {len(result.get('edges', []))} edges")
         return result
         
     except HTTPException:
